@@ -1,5 +1,6 @@
 package com.reger.dubbo.config;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +11,12 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.boot.bind.PropertiesConfigurationFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.util.SocketUtils;
@@ -37,37 +40,30 @@ import com.reger.dubbo.rpc.filter.ProviderFilterBean;
 public class DubboAutoConfiguration extends AnnotationBean
 		implements EnvironmentAware, ApplicationContextAware, InitializingBean {
 
-	public DubboAutoConfiguration() {
-		super();
-	}
-
 	private final static Logger logger = LoggerFactory.getLogger(DubboAutoConfiguration.class);
 
 	private static final long serialVersionUID = 1L;
+	public static final String VALIDATOR_BEAN_NAME = "configurationPropertiesValidator";
 
 	private ConfigurableEnvironment environment;
 	private ApplicationContext applicationContext;
+	private ConfigurationPropertiesBinder propertiesBinder;
+	 
+	private  DubboProperties getDubboProperties() {
+		if(propertiesBinder==null) {
+			this.propertiesBinder=new ConfigurationPropertiesBinder(applicationContext, VALIDATOR_BEAN_NAME);
+		}
+		Annotation annotations=AnnotationUtils.findAnnotation(DubboProperties.class, ConfigurationProperties.class);
+		DubboProperties existingValue=new DubboProperties();
+		Bindable<DubboProperties> bindable = Bindable.of(DubboProperties.class).withExistingValue(existingValue).withAnnotations(annotations);
+		propertiesBinder.bind(bindable);
+		return existingValue;
+	}
 
 	@Override
 	public void setEnvironment(Environment environment) {
 		super.setEnvironment(environment);
 		this.environment = (ConfigurableEnvironment) environment;
-	}
-
-	private <T> T getPropertiesConfigurationBean(String targetName, Class<T> types) {
-		PropertiesConfigurationFactory<T> factory = new PropertiesConfigurationFactory<T>(types);
-		factory.setPropertySources(environment.getPropertySources());
-		factory.setConversionService(environment.getConversionService());
-		factory.setIgnoreInvalidFields(true);
-		factory.setIgnoreUnknownFields(true);
-		factory.setIgnoreNestedProperties(false);
-		factory.setTargetName(targetName);
-		try {
-			factory.bindPropertiesToTarget();
-			return factory.getObject();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private List<ProtocolConfig> getProtocols(DubboProperties dubboProperties) {
@@ -128,7 +124,7 @@ public class DubboAutoConfiguration extends AnnotationBean
 
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		DubboProperties dubboProperties = this.getPropertiesConfigurationBean(DubboProperties.targetName, DubboProperties.class);
+		DubboProperties dubboProperties=this.getDubboProperties();
 		ApplicationConfig application = dubboProperties.getApplication();
 		MonitorConfig monitor = dubboProperties.getMonitor();
 		ModuleConfig module = dubboProperties.getModule();
