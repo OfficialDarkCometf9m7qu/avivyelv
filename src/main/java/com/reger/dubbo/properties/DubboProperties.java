@@ -20,7 +20,7 @@ public class DubboProperties {
 	/**
 	 * 应用基础信息
 	 */
-	private ApplicationConfig application;
+	private ApplicationConfig application=new ApplicationConfig();
 	/**
 	 * 应用注册中心
 	 */
@@ -71,6 +71,9 @@ public class DubboProperties {
 		registry.setAddress("127.0.0.1");
 		registry.setPort(2181);
 		registry.setProtocol("zookeeper");
+		application.setQosEnable(false);
+		application.setQosPort(0);
+		application.setQosAcceptForeignIp(false);
 	}
 
 	public List<RegistryConfig> getRegistrys() {
@@ -82,6 +85,9 @@ public class DubboProperties {
 	}
 
 	public ApplicationConfig getApplication() {
+		System.err.println(application.getQosEnable());
+		System.err.println(application.getQosPort());
+		System.err.println(application.getQosAcceptForeignIp());
 		return application;
 	}
 
