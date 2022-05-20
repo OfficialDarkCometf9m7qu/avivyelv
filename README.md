@@ -23,6 +23,7 @@ spring-boot-start-dubbo，是spring-boot与dubbo有机结合的桥梁，根据`s
 发布时间： 2018年3月13日
 更新内容：
   1.升级spring-boot依赖至2.0.0 
+  2.添加qos相关配置参数,在'spring.dubbo.application'下边
 
 1.0.11
 发布时间： 2018年3月4日
@@ -170,6 +171,10 @@ spring:
       logger: slf4j           # 可选 性能优化 日志输出方式，可选：slf4j,jcl,log4j,jdk 2.2.0以上版本
       organization:           # 可选 服务治理 组织名称(BU或部门)，用于注册中心区分服务来源，此配置项建议不要使用autoconfig，直接写死在配置中，比如china,intl,itu,crm,asc,dw,aliexpress等 2.0.0以上版本
       version:                # 可选 服务治理 当前应用的版本 2.2.0以上版本
+      qos-enable: false       # 是否启用qos 
+      qos-port: 0             # 本机的qos端口
+      qos-accept-foreign-ip: false
+
 ```
 #### 2.服务扫描的包（使用注解时必须配置）
 ```yml
