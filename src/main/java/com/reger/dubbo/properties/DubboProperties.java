@@ -85,9 +85,6 @@ public class DubboProperties {
 	}
 
 	public ApplicationConfig getApplication() {
-		System.err.println(application.getQosEnable());
-		System.err.println(application.getQosPort());
-		System.err.println(application.getQosAcceptForeignIp());
 		return application;
 	}
 
