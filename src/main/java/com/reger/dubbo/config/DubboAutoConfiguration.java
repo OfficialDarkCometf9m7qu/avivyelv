@@ -1,6 +1,5 @@
 package com.reger.dubbo.config;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +10,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.util.SocketUtils;
@@ -43,20 +40,12 @@ public class DubboAutoConfiguration extends AnnotationBean
 	private final static Logger logger = LoggerFactory.getLogger(DubboAutoConfiguration.class);
 
 	private static final long serialVersionUID = 1L;
-	public static final String VALIDATOR_BEAN_NAME = "configurationPropertiesValidator";
 
 	private ConfigurableEnvironment environment;
 	private ApplicationContext applicationContext;
-	private ConfigurationPropertiesBinder propertiesBinder;
-	 
+	
 	private  DubboProperties getDubboProperties() {
-		if(propertiesBinder==null) {
-			this.propertiesBinder=new ConfigurationPropertiesBinder(applicationContext, VALIDATOR_BEAN_NAME);
-		}
-		Annotation annotations=AnnotationUtils.findAnnotation(DubboProperties.class, ConfigurationProperties.class);
-		DubboProperties existingValue=new DubboProperties();
-		Bindable<DubboProperties> bindable = Bindable.of(DubboProperties.class).withExistingValue(existingValue).withAnnotations(annotations);
-		propertiesBinder.bind(bindable);
+		DubboProperties existingValue = Binder.get(environment).bind(DubboProperties.targetName, DubboProperties.class).get();
 		return existingValue;
 	}
 
