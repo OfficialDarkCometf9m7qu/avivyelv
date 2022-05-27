@@ -14,7 +14,6 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.util.SocketUtils;
 import org.springframework.util.StringUtils;
@@ -41,7 +40,7 @@ public class DubboAutoConfiguration extends AnnotationBean
 
 	private static final long serialVersionUID = 1L;
 
-	private ConfigurableEnvironment environment;
+	private Environment environment;
 	private ApplicationContext applicationContext;
 	
 	private  DubboProperties getDubboProperties() {
@@ -52,7 +51,7 @@ public class DubboAutoConfiguration extends AnnotationBean
 	@Override
 	public void setEnvironment(Environment environment) {
 		super.setEnvironment(environment);
-		this.environment = (ConfigurableEnvironment) environment;
+		this.environment = environment;
 	}
 
 	private List<ProtocolConfig> getProtocols(DubboProperties dubboProperties) {
