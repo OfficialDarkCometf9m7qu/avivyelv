@@ -6,5 +6,5 @@
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::       ${spring-boot.formatted-version}
- :: Dubbo       ::        (v2.5.9.RELEASE)
+ :: Dubbo       ::        (v2.5.10.RELEASE)
  
