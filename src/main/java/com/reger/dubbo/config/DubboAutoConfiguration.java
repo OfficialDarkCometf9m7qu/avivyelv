@@ -289,8 +289,15 @@ public class DubboAutoConfiguration extends AnnotationBean
 		for (int index = 0; index < protocols.size(); index++) {
 			ProtocolConfig protocol = protocols.get(index);
 			String beanName = protocol.getId();
-			if (StringUtils.isEmpty(beanName)) {
-				beanName = "protocolConfig" + index;
+			if (StringUtils.hasText(protocol.getId())) {
+				beanName = protocol.getId();
+			}else if(StringUtils.hasText(protocol.getName())) {
+				beanName = protocol.getName();
+				protocol.setId(beanName);
+			}else {
+				beanName = "dubbo";
+				protocol.setName(beanName);
+				protocol.setId(beanName);
 			}
 			if (protocol.getPort() == null || protocol.getPort() == 0) {
 				protocol.setPort(SocketUtils.findAvailableTcpPort(53600, 53688));
