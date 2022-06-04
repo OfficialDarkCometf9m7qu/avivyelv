@@ -44,6 +44,7 @@ import com.alibaba.dubbo.config.spring.beans.factory.annotation.InjectAnnotation
 import com.alibaba.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessor;
 import com.alibaba.dubbo.config.spring.context.annotation.DubboClassPathBeanDefinitionScanner;
 import com.alibaba.dubbo.config.spring.util.BeanRegistrar;
+import com.reger.dubbo.annotation.Export;
 
 public class AnnotationBean extends AbstractConfig implements DisposableBean, BeanFactoryPostProcessor,
 		ResourceLoaderAware, EnvironmentAware, BeanClassLoaderAware {
@@ -119,6 +120,34 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 		Service service = findAnnotation(beanClass, Service.class);
 		Class<?> interfaceClass = resolveServiceInterfaceClass(beanClass, service);
 		String beanName = beanDefinitionHolder.getBeanName();
+		if(interfaceClass==null){
+			Class<?>[] interfacess = beanClass.getInterfaces();
+			Assert.isTrue(interfacess.length!=0, beanClass+"没有实现任何接口，不可以发布服务");
+			for (Class<?> interfaces : interfacess) {
+				AbstractBeanDefinition serviceBeanDefinition = buildServiceBeanDefinition(service, interfaces, beanName);
+				registerWithGeneratedName(serviceBeanDefinition, registry);
+			}
+		}else{
+			AbstractBeanDefinition serviceBeanDefinition = buildServiceBeanDefinition(service, interfaceClass, beanName);
+			registerWithGeneratedName(serviceBeanDefinition, registry);
+		}
+	}
+	
+	/**
+	 * dubbo导出加有@Export的类
+	 * @param bean
+	 * @param beanName
+	 * @param export
+	 * @param registry
+	 */
+	protected void exportServiceBean(Object bean,String beanName, BeanDefinitionRegistry registry) {
+		Class<?> beanClass = this.getOriginalClass(bean);
+		Export export=findAnnotation(beanClass, Export.class);
+		if(export==null) {
+			return;
+		}
+		Service service = export.service();
+		Class<?> interfaceClass = resolveServiceInterfaceClass(beanClass, service);
 		if(interfaceClass==null){
 			Class<?>[] interfacess = beanClass.getInterfaces();
 			Assert.isTrue(interfacess.length!=0, beanClass+"没有实现任何接口，不可以发布服务");
@@ -247,25 +276,6 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 		return packages.toArray(new String[] {});
 	}
 
-	/**
-	 * 匹配类实例是否在包中
-	 * 
-	 * @param bean
-	 *            被判断的类
-	 * @return 是否包含
-	 */
-	protected boolean isMatchPackage(Object bean) {
-		if (annotationPackages.length == 0) {
-			return true;
-		}
-		String beanClassName = this.getOriginalClass(bean).getName();
-		for (String pkg : annotationPackages) {
-			if (beanClassName.startsWith(pkg)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * 获取bean的原始类型

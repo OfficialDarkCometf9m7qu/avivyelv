@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.ApplicationContext;
@@ -34,7 +35,7 @@ import com.reger.dubbo.rpc.filter.ProviderFilter;
 import com.reger.dubbo.rpc.filter.ProviderFilterBean;
 
 public class DubboAutoConfiguration extends AnnotationBean
-		implements EnvironmentAware, ApplicationContextAware, InitializingBean {
+		implements EnvironmentAware, ApplicationContextAware, InitializingBean,BeanPostProcessor {
 
 	private final static Logger logger = LoggerFactory.getLogger(DubboAutoConfiguration.class);
 
@@ -109,7 +110,11 @@ public class DubboAutoConfiguration extends AnnotationBean
 		}
 		return ret;
 	}
-
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		super.exportServiceBean(bean, beanName, registry);
+		return bean;
+	}
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		DubboProperties dubboProperties=this.getDubboProperties();
