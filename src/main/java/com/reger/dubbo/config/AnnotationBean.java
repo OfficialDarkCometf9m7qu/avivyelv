@@ -100,39 +100,14 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 		DubboClassPathBeanDefinitionScanner definitionScanner = new DubboClassPathBeanDefinitionScanner( registry, environment, resourceLoader);
 		definitionScanner.addIncludeFilter(new AnnotationTypeFilter(Service.class));
 		Set<BeanDefinitionHolder> definitionHolders = definitionScanner.doScan(this.annotationPackages);
-		for (BeanDefinitionHolder definitionHolder : definitionHolders) {
-			registerServiceBean(definitionHolder, registry);
+		for (BeanDefinitionHolder beanDefinitionHolder : definitionHolders) {
+			Class<?> beanClass = resolveClass(beanDefinitionHolder);
+			Service service = findAnnotation(beanClass, Service.class);
+			this.registerServiceBean(service, beanClass, beanDefinitionHolder.getBeanName());
 		}
 		logger.debug("{} annotated @Service Components { {} } were scanned under package[{}]", definitionHolders.size(), definitionHolders, this.annotationPackages);
 	}
 
-	/**
-	 * Registers {@link ServiceBean} from new annotated {@link Service}
-	 * {@link BeanDefinition}
-	 *
-	 * @param beanDefinitionHolder
-	 * @param registry
-	 * @see ServiceBean
-	 * @see BeanDefinition
-	 */
-	private void registerServiceBean(BeanDefinitionHolder beanDefinitionHolder, BeanDefinitionRegistry registry) {
-		Class<?> beanClass = resolveClass(beanDefinitionHolder);
-		Service service = findAnnotation(beanClass, Service.class);
-		Class<?> interfaceClass = resolveServiceInterfaceClass(beanClass, service);
-		String beanName = beanDefinitionHolder.getBeanName();
-		if(interfaceClass==null){
-			Class<?>[] interfacess = beanClass.getInterfaces();
-			Assert.isTrue(interfacess.length!=0, beanClass+"没有实现任何接口，不可以发布服务");
-			for (Class<?> interfaces : interfacess) {
-				AbstractBeanDefinition serviceBeanDefinition = buildServiceBeanDefinition(service, interfaces, beanName);
-				registerWithGeneratedName(serviceBeanDefinition, registry);
-			}
-		}else{
-			AbstractBeanDefinition serviceBeanDefinition = buildServiceBeanDefinition(service, interfaceClass, beanName);
-			registerWithGeneratedName(serviceBeanDefinition, registry);
-		}
-	}
-	
 	/**
 	 * dubbo导出加有@Export的类
 	 * @param bean
@@ -147,6 +122,10 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 			return;
 		}
 		Service service = export.service();
+		this.registerServiceBean(service, beanClass, beanName);
+	}
+	
+	private void registerServiceBean(Service service,Class<?> beanClass,String beanName) {
 		Class<?> interfaceClass = resolveServiceInterfaceClass(beanClass, service);
 		if(interfaceClass==null){
 			Class<?>[] interfacess = beanClass.getInterfaces();
