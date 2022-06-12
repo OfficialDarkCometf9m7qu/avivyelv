@@ -149,9 +149,9 @@ implements BeanFactoryAware, MergedBeanDefinitionPostProcessor, PriorityOrdered,
             	PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, beanClass);
                 if(bean!=null){
                 	elements.add(injectBeanPostProcessor.createAutowiredMethodElement(bridgedMethod, true, pd));
-                	return;
+                }else {
+                	elements.add(new ReferenceMethodElement(method, pd, inject.value()));
                 }
-                elements.add(new ReferenceMethodElement(method, pd, inject.value()));
             }
         });
 

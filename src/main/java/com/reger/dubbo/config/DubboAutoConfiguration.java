@@ -15,6 +15,7 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.SocketUtils;
 import org.springframework.util.StringUtils;
@@ -34,6 +35,7 @@ import com.reger.dubbo.rpc.filter.ConsumerFilterBean;
 import com.reger.dubbo.rpc.filter.ProviderFilter;
 import com.reger.dubbo.rpc.filter.ProviderFilterBean;
 
+@Configuration
 public class DubboAutoConfiguration extends AnnotationBean
 		implements EnvironmentAware, ApplicationContextAware, InitializingBean,BeanPostProcessor {
 
@@ -139,7 +141,6 @@ public class DubboAutoConfiguration extends AnnotationBean
 		if (consumer != null) {
 			consumer.setRegistries(this.getRegistry(registryConfigs, "spring.dubbo.consumer.registry"));
 		}
-
 		this.registerThis(basePackage, beanFactory);
 		this.registerApplication(application, beanFactory);
 		this.registerProtocols(protocols, beanFactory);

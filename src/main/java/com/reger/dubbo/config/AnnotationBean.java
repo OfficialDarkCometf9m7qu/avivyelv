@@ -183,7 +183,7 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 		 */
 		String moduleConfigBeanName = service.module();
 		if (StringUtils.hasText(moduleConfigBeanName)) {
-			builder.addPropertyReference("application", moduleConfigBeanName);
+			builder.addPropertyReference("module", moduleConfigBeanName);
 		}
 		/**
 		 * Add {@link com.alibaba.dubbo.config.RegistryConfig} Bean reference
