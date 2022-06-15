@@ -1,6 +1,5 @@
 package com.reger.dubbo.config;
 
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.rootBeanDefinition;
 import static org.springframework.beans.factory.support.BeanDefinitionReaderUtils.registerWithGeneratedName;
 import static org.springframework.core.annotation.AnnotationUtils.findAnnotation;
 import static org.springframework.util.ClassUtils.resolveClassName;
@@ -19,11 +18,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.env.Environment;
@@ -31,7 +26,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.dubbo.common.Constants;
@@ -39,7 +33,6 @@ import com.alibaba.dubbo.config.AbstractConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.annotation.Service;
-import com.alibaba.dubbo.config.spring.ServiceBean;
 import com.alibaba.dubbo.config.spring.beans.factory.annotation.InjectAnnotationBeanPostProcessor;
 import com.alibaba.dubbo.config.spring.beans.factory.annotation.ReferenceAnnotationBeanPostProcessor;
 import com.alibaba.dubbo.config.spring.context.annotation.DubboClassPathBeanDefinitionScanner;
@@ -121,8 +114,10 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 		if(export==null) {
 			return;
 		}
-		Service service = export.service();
-		this.registerServiceBean(service, beanClass, beanName);
+		Class<?>[] interfacesClaz = beanClass.getInterfaces();
+		for (Class<?> interfaces : interfacesClaz) {
+			registerWithGeneratedName(ExportBean.build(export, beanName, interfaces), registry);
+		}
 	}
 	
 	private void registerServiceBean(Service service,Class<?> beanClass,String beanName) {
@@ -131,79 +126,13 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 			Class<?>[] interfacess = beanClass.getInterfaces();
 			Assert.isTrue(interfacess.length!=0, beanClass+"没有实现任何接口，不可以发布服务");
 			for (Class<?> interfaces : interfacess) {
-				AbstractBeanDefinition serviceBeanDefinition = buildServiceBeanDefinition(service, interfaces, beanName);
-				registerWithGeneratedName(serviceBeanDefinition, registry);
+				registerWithGeneratedName(ExportBean.build(service, beanName, interfaces), registry);
 			}
 		}else{
-			AbstractBeanDefinition serviceBeanDefinition = buildServiceBeanDefinition(service, interfaceClass, beanName);
-			registerWithGeneratedName(serviceBeanDefinition, registry);
+			registerWithGeneratedName(ExportBean.build(service, beanName, interfaceClass), registry);
 		}
 	}
 
-	private ManagedList<RuntimeBeanReference> toRuntimeBeanReferences(String... beanNames) {
-		ManagedList<RuntimeBeanReference> runtimeBeanReferences = new ManagedList<RuntimeBeanReference>();
-		if (!ObjectUtils.isEmpty(beanNames)) {
-			for (String beanName : beanNames) {
-				runtimeBeanReferences.add(new RuntimeBeanReference(beanName));
-			}
-		}
-		return runtimeBeanReferences;
-	}
-
-	private AbstractBeanDefinition buildServiceBeanDefinition(Service service, Class<?> interfaceClass,
-			String annotatedServiceBeanName) {
-		BeanDefinitionBuilder builder = 
-				rootBeanDefinition(ServiceBean.class)
-				.addConstructorArgValue(service)
-				.addPropertyReference("ref", annotatedServiceBeanName)
-				.addPropertyValue("interfaceClass", interfaceClass);
-		/**
-		 * Add {@link com.alibaba.dubbo.config.ProviderConfig} Bean reference
-		 */
-		String providerConfigBeanName = service.provider();
-		if (StringUtils.hasText(providerConfigBeanName)) {
-			builder.addPropertyReference("provider", providerConfigBeanName);
-		}
-		/**
-		 * Add {@link com.alibaba.dubbo.config.MonitorConfig} Bean reference
-		 */
-		String monitorConfigBeanName = service.monitor();
-		if (StringUtils.hasText(monitorConfigBeanName)) {
-			builder.addPropertyReference("monitor", monitorConfigBeanName);
-		}
-		/**
-		 * Add {@link com.alibaba.dubbo.config.ApplicationConfig} Bean reference
-		 */
-		String applicationConfigBeanName = service.application();
-		if (StringUtils.hasText(applicationConfigBeanName)) {
-			builder.addPropertyReference("application", applicationConfigBeanName);
-		}
-		/**
-		 * Add {@link com.alibaba.dubbo.config.ModuleConfig} Bean reference
-		 */
-		String moduleConfigBeanName = service.module();
-		if (StringUtils.hasText(moduleConfigBeanName)) {
-			builder.addPropertyReference("module", moduleConfigBeanName);
-		}
-		/**
-		 * Add {@link com.alibaba.dubbo.config.RegistryConfig} Bean reference
-		 */
-		String[] registryConfigBeanNames = service.registry();
-		List<RuntimeBeanReference> registryRuntimeBeanReferences = toRuntimeBeanReferences(registryConfigBeanNames);
-		if (!registryRuntimeBeanReferences.isEmpty()) {
-			builder.addPropertyValue("registries", registryRuntimeBeanReferences);
-		}
-		/**
-		 * Add {@link com.alibaba.dubbo.config.ProtocolConfig} Bean reference
-		 */
-		String[] protocolConfigBeanNames = service.protocol();
-		List<RuntimeBeanReference> protocolRuntimeBeanReferences = toRuntimeBeanReferences(protocolConfigBeanNames);
-		if (!registryRuntimeBeanReferences.isEmpty()) {
-			builder.addPropertyValue("protocols", protocolRuntimeBeanReferences);
-		}
-		return builder.getBeanDefinition();
-
-	}
 
 	private Class<?> resolveServiceInterfaceClass(Class<?> annotatedServiceBeanClass, Service service) {
 		Class<?> interfaceClass = service.interfaceClass();
