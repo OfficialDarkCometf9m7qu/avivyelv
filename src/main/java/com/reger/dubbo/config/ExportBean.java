@@ -20,7 +20,7 @@ public class ExportBean {
     public static AbstractBeanDefinition build(Export export,String beanName,Class<?> interfaces) {
     	BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(ServiceBean.class);
     	beanDefinitionBuilder.addPropertyReference("ref", beanName);
-    	beanDefinitionBuilder.addPropertyValue("interface", interfaces);
+    	beanDefinitionBuilder.addPropertyValue("interfaceClass", interfaces);
     	if(StringUtils.hasText(export.provider())) {
     		beanDefinitionBuilder.addPropertyReference("provider", export.provider());
     	}
@@ -116,14 +116,14 @@ public class ExportBean {
     	if(export.parameters().length>0) {
         	beanDefinitionBuilder.addPropertyValue("listener",toMap(export.parameters()));
     	}
-    	beanDefinitionBuilder.setInitMethodName("export");
+    	beanDefinitionBuilder.setInitMethodName("export");System.err.println("----------------------??>>>>"+export);
     	return beanDefinitionBuilder.getBeanDefinition();
 	}
 
     public static AbstractBeanDefinition build(Service service,String beanName,Class<?> interfaces) {
     	BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(ServiceBean.class);
     	beanDefinitionBuilder.addPropertyReference("ref", beanName);
-    	beanDefinitionBuilder.addPropertyValue("interface", interfaces);
+    	beanDefinitionBuilder.addPropertyValue("interfaceClass", interfaces);
     	if(StringUtils.hasText(service.provider())) {
     		beanDefinitionBuilder.addPropertyReference("provider", service.provider());
     	}
@@ -219,7 +219,7 @@ public class ExportBean {
     	if(service.parameters().length>0) {
         	beanDefinitionBuilder.addPropertyValue("listener",toMap(service.parameters()));
     	}
-    	beanDefinitionBuilder.setInitMethodName("export");
+    	beanDefinitionBuilder.setInitMethodName("export");System.err.println("----------------------??>>>>"+service);
     	return beanDefinitionBuilder.getBeanDefinition();
 	}
     private static Map<String,String> toMap(String[] strs) {
