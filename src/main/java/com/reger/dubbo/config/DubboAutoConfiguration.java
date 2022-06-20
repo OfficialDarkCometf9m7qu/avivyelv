@@ -30,6 +30,7 @@ import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.ServiceConfig;
+import com.alibaba.dubbo.config.spring.ServiceBean;
 import com.reger.dubbo.properties.DubboProperties;
 import com.reger.dubbo.rpc.filter.ConsumerFilter;
 import com.reger.dubbo.rpc.filter.ConsumerFilterBean;
@@ -337,8 +338,10 @@ public class DubboAutoConfiguration extends AnnotationBean
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			applicationContext.getBeansOfType(ServiceBean.class);
+		} catch (Exception e) {
+		}
 	}
 
 }

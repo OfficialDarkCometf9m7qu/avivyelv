@@ -7,13 +7,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import org.springframework.core.annotation.AliasFor;
+import org.springframework.stereotype.Service;
 
+@Service
 @Target(TYPE)
 @Retention(RUNTIME)
-@org.springframework.stereotype.Service
 public @interface Export {
 
-	@AliasFor(annotation = org.springframework.stereotype.Service.class)
+	@AliasFor(annotation = Service.class)
 	String value() default "";
 
     String version() default "";
@@ -22,7 +23,7 @@ public @interface Export {
 
     String path() default "";
 
-    boolean export() default false;
+    boolean export() default true;
 
     String token() default "";
 
@@ -34,7 +35,7 @@ public @interface Export {
 
     int executes() default 0;
 
-    boolean register() default false;
+    boolean register() default true;
 
     int weight() default 0;
 
