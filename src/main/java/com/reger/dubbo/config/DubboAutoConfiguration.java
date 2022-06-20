@@ -11,6 +11,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -37,7 +38,7 @@ import com.reger.dubbo.rpc.filter.ProviderFilterBean;
 
 @Configuration
 public class DubboAutoConfiguration extends AnnotationBean
-		implements EnvironmentAware, ApplicationContextAware, InitializingBean,BeanPostProcessor {
+		implements EnvironmentAware, ApplicationContextAware, InitializingBean,BeanPostProcessor,CommandLineRunner {
 
 	private final static Logger logger = LoggerFactory.getLogger(DubboAutoConfiguration.class);
 
@@ -332,6 +333,12 @@ public class DubboAutoConfiguration extends AnnotationBean
 		} catch (NoSuchBeanDefinitionException e) {
 			logger.debug("没有ProviderFilter");
 		}
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -116,7 +116,7 @@ public class ExportBean {
     	if(export.parameters().length>0) {
         	beanDefinitionBuilder.addPropertyValue("listener",toMap(export.parameters()));
     	}
-    	beanDefinitionBuilder.setInitMethodName("export");System.err.println("----------------------??>>>>"+export);
+    	beanDefinitionBuilder.setLazyInit(false);
     	return beanDefinitionBuilder.getBeanDefinition();
 	}
 
@@ -219,7 +219,7 @@ public class ExportBean {
     	if(service.parameters().length>0) {
         	beanDefinitionBuilder.addPropertyValue("listener",toMap(service.parameters()));
     	}
-    	beanDefinitionBuilder.setInitMethodName("export");System.err.println("----------------------??>>>>"+service);
+    	beanDefinitionBuilder.setLazyInit(false);
     	return beanDefinitionBuilder.getBeanDefinition();
 	}
     private static Map<String,String> toMap(String[] strs) {
