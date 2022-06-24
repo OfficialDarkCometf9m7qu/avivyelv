@@ -103,10 +103,9 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 
 	/**
 	 * dubbo导出加有@Export的类
-	 * @param bean
-	 * @param beanName
-	 * @param export
-	 * @param registry
+	 * @param bean bean
+	 * @param beanName beanName
+	 * @param registry registry
 	 */
 	protected void exportServiceBean(Object bean,String beanName, BeanDefinitionRegistry registry) {
 		Class<?> beanClass = this.getOriginalClass(bean);
@@ -168,8 +167,7 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 	/**
 	 * 切包名字符串
 	 * 
-	 * @param annotationPackage
-	 *            包名
+	 * @param annotationPackage  包名
 	 * @return 切好后的字符串
 	 */
 	private String[] trims(String annotationPackage) {

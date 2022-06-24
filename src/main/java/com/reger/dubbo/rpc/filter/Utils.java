@@ -19,7 +19,7 @@ public class Utils {
 
 	/**
 	 * 注册dubbo可以进行传递的异常
-	 * @param claz 
+	 * @param claz  claz
 	 */
 	public final static void register(Class<? extends Throwable> claz) {
 		exceptions.add(claz);
@@ -42,8 +42,8 @@ public class Utils {
 	/**
 	 * 对服务端的异常进行编码
 	 * 
-	 * @param relust
-	 * @return
+	 * @param relust relust
+	 * @return relust
 	 */
 	protected final static Result encoderException(Result relust) {
 		if (relust != null && relust.hasException()) {
