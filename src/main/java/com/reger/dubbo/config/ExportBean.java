@@ -39,20 +39,36 @@ public class ExportBean {
     	if(export.protocol().length>0) {
         	beanDefinitionBuilder.addPropertyValue("protocols",toRuntimeBeanReferences(export.protocol()));
     	}
-    	beanDefinitionBuilder.addPropertyValue("export", export.export());
-    	beanDefinitionBuilder.addPropertyValue("deprecated", export.deprecated());
-    	beanDefinitionBuilder.addPropertyValue("dynamic", export.dynamic());
-    	beanDefinitionBuilder.addPropertyValue("executes", export.executes());
-    	beanDefinitionBuilder.addPropertyValue("register", export.register());
-    	beanDefinitionBuilder.addPropertyValue("weight", export.weight());
-    	beanDefinitionBuilder.addPropertyValue("delay", export.delay());
-    	beanDefinitionBuilder.addPropertyValue("connections", export.connections());
-    	beanDefinitionBuilder.addPropertyValue("callbacks", export.callbacks());
-    	beanDefinitionBuilder.addPropertyValue("retries", export.retries());
-    	beanDefinitionBuilder.addPropertyValue("actives", export.actives());
-    	beanDefinitionBuilder.addPropertyValue("async", export.async());
-    	beanDefinitionBuilder.addPropertyValue("sent", export.sent());
-    	beanDefinitionBuilder.addPropertyValue("timeout", export.timeout());
+//    	beanDefinitionBuilder.addPropertyValue("export", export.export());
+//    	beanDefinitionBuilder.addPropertyValue("deprecated", export.deprecated());
+//    	beanDefinitionBuilder.addPropertyValue("dynamic", export.dynamic());
+//    	beanDefinitionBuilder.addPropertyValue("register", export.register());
+//    	beanDefinitionBuilder.addPropertyValue("async", export.async());
+//    	beanDefinitionBuilder.addPropertyValue("sent", export.sent());
+    	if(export.weight()>0) {
+    		beanDefinitionBuilder.addPropertyValue("weight", export.weight());
+    	}
+    	if(export.delay()>0) {
+    		beanDefinitionBuilder.addPropertyValue("delay", export.delay());
+    	}
+    	if(export.timeout()>0) {
+    		beanDefinitionBuilder.addPropertyValue("timeout", export.timeout());
+    	}
+    	if(export.connections()>0) {
+    		beanDefinitionBuilder.addPropertyValue("connections", export.connections());
+    	}
+    	if(export.callbacks()>0) {
+    		beanDefinitionBuilder.addPropertyValue("callbacks", export.callbacks());
+    	}
+    	if(export.executes()>0) {
+    		beanDefinitionBuilder.addPropertyValue("executes", export.executes());
+    	}
+    	if(export.retries()>0) {
+    		beanDefinitionBuilder.addPropertyValue("retries", export.retries());
+    	}
+    	if(export.actives()>0) {
+        	beanDefinitionBuilder.addPropertyValue("actives", export.actives());
+    	}
     	if(StringUtils.hasText(export.version())) {
     		beanDefinitionBuilder.addPropertyValue("version", export.version());
     	} 
@@ -142,20 +158,36 @@ public class ExportBean {
     	if(service.protocol().length>0) {
         	beanDefinitionBuilder.addPropertyValue("protocols",toRuntimeBeanReferences(service.protocol()));
     	}
-    	beanDefinitionBuilder.addPropertyValue("export", service.export());
-    	beanDefinitionBuilder.addPropertyValue("deprecated", service.deprecated());
-    	beanDefinitionBuilder.addPropertyValue("dynamic", service.dynamic());
-    	beanDefinitionBuilder.addPropertyValue("executes", service.executes());
-    	beanDefinitionBuilder.addPropertyValue("register", service.register());
-    	beanDefinitionBuilder.addPropertyValue("weight", service.weight());
-    	beanDefinitionBuilder.addPropertyValue("delay", service.delay());
-    	beanDefinitionBuilder.addPropertyValue("connections", service.connections());
-    	beanDefinitionBuilder.addPropertyValue("callbacks", service.callbacks());
-    	beanDefinitionBuilder.addPropertyValue("retries", service.retries());
-    	beanDefinitionBuilder.addPropertyValue("actives", service.actives());
-    	beanDefinitionBuilder.addPropertyValue("async", service.async());
-    	beanDefinitionBuilder.addPropertyValue("sent", service.sent());
-    	beanDefinitionBuilder.addPropertyValue("timeout", service.timeout());
+//    	beanDefinitionBuilder.addPropertyValue("export", service.export());
+//    	beanDefinitionBuilder.addPropertyValue("deprecated", service.deprecated());
+//    	beanDefinitionBuilder.addPropertyValue("dynamic", service.dynamic());
+//    	beanDefinitionBuilder.addPropertyValue("register", service.register());
+//    	beanDefinitionBuilder.addPropertyValue("async", service.async());
+//    	beanDefinitionBuilder.addPropertyValue("sent", service.sent());
+    	if(service.weight()>0) {
+    		beanDefinitionBuilder.addPropertyValue("weight", service.weight());
+    	}
+    	if(service.delay()>0) {
+    		beanDefinitionBuilder.addPropertyValue("delay", service.delay());
+    	}
+    	if(service.timeout()>0) {
+    		beanDefinitionBuilder.addPropertyValue("timeout", service.timeout());
+    	}
+    	if(service.connections()>0) {
+    		beanDefinitionBuilder.addPropertyValue("connections", service.connections());
+    	}
+    	if(service.callbacks()>0) {
+    		beanDefinitionBuilder.addPropertyValue("callbacks", service.callbacks());
+    	}
+    	if(service.executes()>0) {
+    		beanDefinitionBuilder.addPropertyValue("executes", service.executes());
+    	}
+    	if(service.retries()>0) {
+    		beanDefinitionBuilder.addPropertyValue("retries", service.retries());
+    	}
+    	if(service.actives()>0) {
+        	beanDefinitionBuilder.addPropertyValue("actives", service.actives());
+    	}
     	if(StringUtils.hasText(service.version())) {
     		beanDefinitionBuilder.addPropertyValue("version", service.version());
     	} 
