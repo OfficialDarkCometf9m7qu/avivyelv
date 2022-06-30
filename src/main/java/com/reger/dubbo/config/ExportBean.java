@@ -45,93 +45,93 @@ public class ExportBean {
 //    	beanDefinitionBuilder.addPropertyValue("register", export.register());
 //    	beanDefinitionBuilder.addPropertyValue("async", export.async());
 //    	beanDefinitionBuilder.addPropertyValue("sent", export.sent());
-    	if(export.weight()>0) {
-    		beanDefinitionBuilder.addPropertyValue("weight", export.weight());
-    	}
-    	if(export.delay()>0) {
-    		beanDefinitionBuilder.addPropertyValue("delay", export.delay());
-    	}
-    	if(export.timeout()>0) {
-    		beanDefinitionBuilder.addPropertyValue("timeout", export.timeout());
-    	}
-    	if(export.connections()>0) {
-    		beanDefinitionBuilder.addPropertyValue("connections", export.connections());
-    	}
-    	if(export.callbacks()>0) {
-    		beanDefinitionBuilder.addPropertyValue("callbacks", export.callbacks());
-    	}
-    	if(export.executes()>0) {
-    		beanDefinitionBuilder.addPropertyValue("executes", export.executes());
-    	}
-    	if(export.retries()>0) {
-    		beanDefinitionBuilder.addPropertyValue("retries", export.retries());
-    	}
-    	if(export.actives()>0) {
-        	beanDefinitionBuilder.addPropertyValue("actives", export.actives());
-    	}
-    	if(StringUtils.hasText(export.version())) {
-    		beanDefinitionBuilder.addPropertyValue("version", export.version());
-    	} 
-    	if(StringUtils.hasText(export.group())) {
-    		beanDefinitionBuilder.addPropertyValue("group", export.group());
-    	} 
-    	if(StringUtils.hasText(export.path())) {
-    		beanDefinitionBuilder.addPropertyValue("path", export.path());
-    	} 
-    	if(StringUtils.hasText(export.token())) {
-    		beanDefinitionBuilder.addPropertyValue("token", export.token());
-    	} 
-    	if(StringUtils.hasText(export.path())) {
-    		beanDefinitionBuilder.addPropertyValue("path", export.path());
-    	} 
-    	if(StringUtils.hasText(export.document())) {
-    		beanDefinitionBuilder.addPropertyValue("document", export.document());
-    	} 
-    	if(StringUtils.hasText(export.accesslog())) {
-    		beanDefinitionBuilder.addPropertyValue("accesslog", export.accesslog());
-    	} 
-    	if(StringUtils.hasText(export.stub())) {
-    		beanDefinitionBuilder.addPropertyValue("stub", export.stub());
-    	} 
-    	if(StringUtils.hasText(export.cluster())) {
-    		beanDefinitionBuilder.addPropertyValue("cluster", export.cluster());
-    	} 
-    	if(StringUtils.hasText(export.proxy())) {
-    		beanDefinitionBuilder.addPropertyValue("proxy", export.proxy());
-    	} 
-    	if(StringUtils.hasText(export.ondisconnect())) {
-    		beanDefinitionBuilder.addPropertyValue("ondisconnect", export.ondisconnect());
-    	} 
-    	if(StringUtils.hasText(export.onconnect())) {
-    		beanDefinitionBuilder.addPropertyValue("onconnect", export.onconnect());
-    	} 
-    	if(StringUtils.hasText(export.owner())) {
-    		beanDefinitionBuilder.addPropertyValue("owner", export.owner());
-    	} 
-    	if(StringUtils.hasText(export.layer())) {
-    		beanDefinitionBuilder.addPropertyValue("layer", export.layer());
-    	} 
-    	if(StringUtils.hasText(export.loadbalance())) {
-    		beanDefinitionBuilder.addPropertyValue("loadbalance", export.loadbalance());
-    	} 
-    	if(StringUtils.hasText(export.mock())) {
-    		beanDefinitionBuilder.addPropertyValue("mock", export.mock());
-    	} 
-    	if(StringUtils.hasText(export.validation())) {
-    		beanDefinitionBuilder.addPropertyValue("validation", export.validation());
-    	} 
-    	if(StringUtils.hasText(export.cache())) {
-    		beanDefinitionBuilder.addPropertyValue("cache", export.cache());
-    	} 
-    	if(export.filter().length>0) {
-        	beanDefinitionBuilder.addPropertyValue("filter",toStr(export.filter()));
-    	}
-    	if(export.listener().length>0) {
-        	beanDefinitionBuilder.addPropertyValue("listener",toStr(export.listener()));
-    	}
-    	if(export.parameters().length>0) {
-        	beanDefinitionBuilder.addPropertyValue("listener",toMap(export.parameters()));
-    	}
+//    	if(export.weight()>0) {
+//    		beanDefinitionBuilder.addPropertyValue("weight", export.weight());
+//    	}
+//    	if(export.delay()>0) {
+//    		beanDefinitionBuilder.addPropertyValue("delay", export.delay());
+//    	}
+//    	if(export.timeout()>0) {
+//    		beanDefinitionBuilder.addPropertyValue("timeout", export.timeout());
+//    	}
+//    	if(export.connections()>0) {
+//    		beanDefinitionBuilder.addPropertyValue("connections", export.connections());
+//    	}
+//    	if(export.callbacks()>0) {
+//    		beanDefinitionBuilder.addPropertyValue("callbacks", export.callbacks());
+//    	}
+//    	if(export.executes()>0) {
+//    		beanDefinitionBuilder.addPropertyValue("executes", export.executes());
+//    	}
+//    	if(export.retries()>0) {
+//    		beanDefinitionBuilder.addPropertyValue("retries", export.retries());
+//    	}
+//    	if(export.actives()>0) {
+//        	beanDefinitionBuilder.addPropertyValue("actives", export.actives());
+//    	}
+//    	if(StringUtils.hasText(export.version())) {
+//    		beanDefinitionBuilder.addPropertyValue("version", export.version());
+//    	} 
+//    	if(StringUtils.hasText(export.group())) {
+//    		beanDefinitionBuilder.addPropertyValue("group", export.group());
+//    	} 
+//    	if(StringUtils.hasText(export.path())) {
+//    		beanDefinitionBuilder.addPropertyValue("path", export.path());
+//    	} 
+//    	if(StringUtils.hasText(export.token())) {
+//    		beanDefinitionBuilder.addPropertyValue("token", export.token());
+//    	} 
+//    	if(StringUtils.hasText(export.path())) {
+//    		beanDefinitionBuilder.addPropertyValue("path", export.path());
+//    	} 
+//    	if(StringUtils.hasText(export.document())) {
+//    		beanDefinitionBuilder.addPropertyValue("document", export.document());
+//    	} 
+//    	if(StringUtils.hasText(export.accesslog())) {
+//    		beanDefinitionBuilder.addPropertyValue("accesslog", export.accesslog());
+//    	} 
+//    	if(StringUtils.hasText(export.stub())) {
+//    		beanDefinitionBuilder.addPropertyValue("stub", export.stub());
+//    	} 
+//    	if(StringUtils.hasText(export.cluster())) {
+//    		beanDefinitionBuilder.addPropertyValue("cluster", export.cluster());
+//    	} 
+//    	if(StringUtils.hasText(export.proxy())) {
+//    		beanDefinitionBuilder.addPropertyValue("proxy", export.proxy());
+//    	} 
+//    	if(StringUtils.hasText(export.ondisconnect())) {
+//    		beanDefinitionBuilder.addPropertyValue("ondisconnect", export.ondisconnect());
+//    	} 
+//    	if(StringUtils.hasText(export.onconnect())) {
+//    		beanDefinitionBuilder.addPropertyValue("onconnect", export.onconnect());
+//    	} 
+//    	if(StringUtils.hasText(export.owner())) {
+//    		beanDefinitionBuilder.addPropertyValue("owner", export.owner());
+//    	} 
+//    	if(StringUtils.hasText(export.layer())) {
+//    		beanDefinitionBuilder.addPropertyValue("layer", export.layer());
+//    	} 
+//    	if(StringUtils.hasText(export.loadbalance())) {
+//    		beanDefinitionBuilder.addPropertyValue("loadbalance", export.loadbalance());
+//    	} 
+//    	if(StringUtils.hasText(export.mock())) {
+//    		beanDefinitionBuilder.addPropertyValue("mock", export.mock());
+//    	} 
+//    	if(StringUtils.hasText(export.validation())) {
+//    		beanDefinitionBuilder.addPropertyValue("validation", export.validation());
+//    	} 
+//    	if(StringUtils.hasText(export.cache())) {
+//    		beanDefinitionBuilder.addPropertyValue("cache", export.cache());
+//    	} 
+//    	if(export.filter().length>0) {
+//        	beanDefinitionBuilder.addPropertyValue("filter",toStr(export.filter()));
+//    	}
+//    	if(export.listener().length>0) {
+//        	beanDefinitionBuilder.addPropertyValue("listener",toStr(export.listener()));
+//    	}
+//    	if(export.parameters().length>0) {
+//        	beanDefinitionBuilder.addPropertyValue("listener",toMap(export.parameters()));
+//    	}
     	beanDefinitionBuilder.setLazyInit(false);
     	return beanDefinitionBuilder.getBeanDefinition();
 	}

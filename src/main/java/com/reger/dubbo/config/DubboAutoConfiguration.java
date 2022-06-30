@@ -338,10 +338,10 @@ public class DubboAutoConfiguration extends AnnotationBean
 
 	@Override
 	public void run(String... args) throws Exception {
-		try {
-			applicationContext.getBeansOfType(ServiceBean.class);
-		} catch (Exception e) {
-		}
+//		try {
+//			applicationContext.getBeansOfType(ServiceBean.class);
+//		} catch (Exception e) {
+//		}
 	}
 
 }
