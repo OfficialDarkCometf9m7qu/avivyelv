@@ -116,7 +116,7 @@ public class DubboAutoConfiguration extends AnnotationBean
 	}
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		super.exportServiceBean(bean, beanName, registry);
+		super.exportServiceBean(bean, beanName );
 		return bean;
 	}
 	@Override
@@ -338,10 +338,10 @@ public class DubboAutoConfiguration extends AnnotationBean
 
 	@Override
 	public void run(String... args) throws Exception {
-//		try {
-//			applicationContext.getBeansOfType(ServiceBean.class);
-//		} catch (Exception e) {
-//		}
+		try {
+			applicationContext.getBeansOfType(ServiceBean.class);
+		} catch (Exception e) {
+		}
 	}
 
 }

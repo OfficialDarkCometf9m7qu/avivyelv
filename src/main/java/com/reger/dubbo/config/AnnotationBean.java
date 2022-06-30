@@ -107,12 +107,16 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 	 * @param beanName beanName
 	 * @param registry registry
 	 */
-	protected void exportServiceBean(Object bean,String beanName, BeanDefinitionRegistry registry) {
+	protected void exportServiceBean(Object bean,String beanName) {
 		Class<?> beanClass = this.getOriginalClass(bean);
 		Export export=findAnnotation(beanClass, Export.class);
 		if(export==null) {
 			return;
 		}
+		this.exportServiceBean(export, beanClass, beanName);
+	}
+
+	protected void exportServiceBean(Export export,Class<?> beanClass,String beanName) {
 		Class<?>[] interfacesClaz = beanClass.getInterfaces();
 		for (Class<?> interfaces : interfacesClaz) {
 			registerWithGeneratedName(ExportBean.build(export, beanName, interfaces), registry);
