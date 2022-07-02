@@ -39,12 +39,24 @@ public class ExportBean {
 		if (export.protocol().length > 0) {
 			beanDefinitionBuilder.addPropertyValue("protocols", toRuntimeBeanReferences(export.protocol()));
 		}
-		// beanDefinitionBuilder.addPropertyValue("export", export.export());
-		// beanDefinitionBuilder.addPropertyValue("deprecated", export.deprecated());
-		// beanDefinitionBuilder.addPropertyValue("dynamic", export.dynamic());
-		// beanDefinitionBuilder.addPropertyValue("register", export.register());
-		// beanDefinitionBuilder.addPropertyValue("async", export.async());
-		// beanDefinitionBuilder.addPropertyValue("sent", export.sent());
+		if (StringUtils.hasText(export.export())) {
+			beanDefinitionBuilder.addPropertyValue("export", export.export().equals("true"));
+		}
+		if (StringUtils.hasText(export.deprecated())) {
+			beanDefinitionBuilder.addPropertyValue("deprecated", export.deprecated().equals("true"));
+		}
+		if (StringUtils.hasText(export.dynamic())) {
+			beanDefinitionBuilder.addPropertyValue("dynamic", export.dynamic().equals("true"));
+		}
+		if (StringUtils.hasText(export.register())) {
+			beanDefinitionBuilder.addPropertyValue("register", export.register().equals("true"));
+		}
+		if (StringUtils.hasText(export.async())) {
+			beanDefinitionBuilder.addPropertyValue("async", export.async().equals("true"));
+		}
+		if (StringUtils.hasText(export.sent())) {
+			beanDefinitionBuilder.addPropertyValue("sent", export.sent().equals("true"));
+		}
 		if (export.weight() > 0) {
 			beanDefinitionBuilder.addPropertyValue("weight", export.weight());
 		}

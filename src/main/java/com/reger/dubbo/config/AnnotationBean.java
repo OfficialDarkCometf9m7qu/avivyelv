@@ -105,7 +105,6 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
 	 * dubbo导出加有@Export的类
 	 * @param bean bean
 	 * @param beanName beanName
-	 * @param registry registry
 	 */
 	protected void exportServiceBean(Object bean,String beanName) {
 		Class<?> beanClass = this.getOriginalClass(bean);
