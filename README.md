@@ -9,7 +9,7 @@ spring-boot-start-dubbo，是spring-boot与dubbo有机结合的桥梁，根据`s
 ###### 1.支持dubbo原生所有的配置项，使用spring-boot方式配置
 ###### 2.配置项描述清晰，让你在配置参数时，`等同在看dubbo官方中文文档`（需要安装spring-ide插件）(<a href="https://dubbo.gitbooks.io/dubbo-user-book" target="dubbo-user-doc-cn">dubbo中文文档点这里</a>)， (<a href="https://github.com/alibaba/dubbo/releases" target="dubbo-releases">dubbo更新记录</a>)
 ###### 3.提供注解@Inject，用来替换@Reference的依赖注入，让spring+dubbo时依赖注入注解更简单（该注解如果不能从spring上下文注入对象，将使用等同@Reference的依赖注入方式注入对象）
-###### 3.提供注解@Export，用来替换@Service的服务的导出， 使用该注解可以解决大部分dubbo注解导出服务时出现遇到的bug
+###### 3.提供注解@Export，用来替换@Service的服务的导出， 使用该注解可以解决大部分dubbo注解导出服务时出现遇到的bug,使用该注解无需要配置包扫描
 
 ## 交流QQ群： 141930386，欢迎加群反馈问题或者提出建议。
 
