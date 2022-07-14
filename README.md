@@ -20,10 +20,18 @@ spring-boot-start-dubbo，是spring-boot与dubbo有机结合的桥梁，根据`s
 
 ### 更新记录
 ```
+1.1.3
+发布时间： 2019年6月20日
+更新内容：
+  1.升级spring-boot依赖至2.1.5
+  2.升级dubbo依赖至2.6.6
+  3.默认注册中心由zookeeper更改为nacos
+  4.默认netty依赖从netty3更改为netty4
+
 1.1.2
 发布时间： 2018年9月12日
 更新内容：
-  1.添加注解@Export
+  1.添加注解@Export,使用该注解导出配置时无需配置包扫描
   2.优化部分代码
   3.升级部分依赖
 
